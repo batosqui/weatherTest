@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">weatherTest</string>
+    <!--CIUDADES-->
+    <string name="location_mvd">Montevideo</string>
+    <string name="location_lnd">Londres</string>
+    <string name="location_sao">San Pablo</string>
+    <string name="location_bsas">Buenos Aires</string>
+    <string name="location_mnc">Munich</string>
+    <string name="title_activity_weather_by_gps">WeatherByGPS</string>
+</resources>

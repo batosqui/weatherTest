@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <!-- TEXT Dimensions-->
+    <dimen name="app_subtitle">20dp</dimen>
+    <dimen name="app_title">50dp</dimen>
+</resources>

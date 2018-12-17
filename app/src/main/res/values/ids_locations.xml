@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lst_locations">
+        <item >3441575</item>
+        <item >3448439</item>
+        <item >2867714</item>
+        <item >3435910</item>
+        <item >2643743</item>
+    </string-array>
+</resources>
