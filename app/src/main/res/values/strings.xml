@@ -7,4 +7,8 @@
     <string name="location_bsas">Buenos Aires</string>
     <string name="location_mnc">Munich</string>
     <string name="title_activity_weather_by_gps">WeatherByGPS</string>
+    <string name="wind_information_title"><u>Información Viento</u></string>
+    <string name="permission_message_title">Permiso requerido</string>
+    <string name="permission_message">La aplicacion necesita acceder a su ubicacion</string>
+    <string name="permission_message_ok">Si</string>
 </resources>

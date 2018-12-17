@@ -83,9 +83,9 @@ public class WeatherByGPS extends AppCompatActivity  implements LocationListener
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
                 new AlertDialog.Builder(this)
-                        .setTitle("Permiso Requerido")
-                        .setMessage("EL dispositivo necesita acceder a GPS")
-                        .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.permission_message_title)
+                        .setMessage(R.string.permission_message)
+                        .setPositiveButton(R.string.permission_message_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //Prompt the user once explanation has been shown
@@ -202,7 +202,7 @@ public class WeatherByGPS extends AppCompatActivity  implements LocationListener
             String[] mIdsArray;
             Log.i("URL", url_by_gps + "lat=" + mLocation.getLatitude() + "&lon=" + mLocation.getLongitude() + "&units=" + mode + "&appid=" + API_KEY);
             String jsonStr = handler.makeServiceCall(url_by_gps + "lat=" + mLocation.getLatitude() + "&lon=" + mLocation.getLongitude() + "&units=" + mode + "&appid=" + API_KEY + "&lang=es");
-            Log.e("AG", "Respuesta de api: " + jsonStr);
+            Log.i(TAG, "Respuesta de api: " + jsonStr);
             if (jsonStr != null) {
                 try {
 
@@ -213,9 +213,9 @@ public class WeatherByGPS extends AppCompatActivity  implements LocationListener
                     URL url = new URL(url_img + weatherData.getWeather().getIcon() + IMG_EXTENSION);
                     Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     weatherData.getWeather().setIconBitmap(image);
-
+//url.openConnection().
                     Log.i("AG", "Finaliza seteo");
-
+                    url.openConnection().getInputStream().close();
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {

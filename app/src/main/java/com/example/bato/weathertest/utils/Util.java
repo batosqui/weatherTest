@@ -9,10 +9,11 @@ public final class Util {
     private static String NORTH_EAST = "NE";
     private static String SOUTH_WEST = "SW";
     private static String SOUTH_EAST = "SE";
+    private static String NO_WIND = "No direction";
 
     public static String getWindDirection(int deg) {
         String windDirection = "";
-        if (deg >= 326.26 && deg <= 11.25) {
+        if (deg >= 326.26 || deg <= 11.25) {
             windDirection = SOUTH;
         } else if (deg >= 11.26 && deg <= 56.25) {
             windDirection = NORTH_EAST;
@@ -28,6 +29,8 @@ public final class Util {
             windDirection = WEST;
         } else if (deg >= 281.26 && deg < 326.25) {
             windDirection = NORTH_WEST;
+        }else{
+            windDirection=NO_WIND;
         }
         return windDirection;
     }

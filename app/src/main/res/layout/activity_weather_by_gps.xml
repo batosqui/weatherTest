@@ -26,6 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.5"
             android:gravity="center_vertical|center_horizontal"
+            android:textColor="@android:color/black"
             android:textSize="@dimen/app_subtitle"
             android:textStyle="bold"/>
 
@@ -61,6 +62,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
+                        android:textColor="@android:color/black"
                         android:text="23°C"
                         android:textSize="@dimen/app_title" />
 
@@ -75,12 +77,14 @@
                             android:id="@+id/TempMin_gps"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
                             android:text="18°C "
                             android:textSize="@dimen/app_subtitle" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
                             android:text=" / "
                             android:textSize="@dimen/app_subtitle" />
 
@@ -88,6 +92,7 @@
                             android:id="@+id/TempMax_gps"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
                             android:text="23°C "
                             android:textSize="@dimen/app_subtitle" />
                     </LinearLayout>
@@ -105,6 +110,7 @@
                     android:id="@+id/dayDescription_gps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="@dimen/app_subtitle" />
 
@@ -113,6 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
+                    android:textColor="@android:color/black"
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="@dimen/app_subtitle" />
             </LinearLayout>
@@ -132,7 +139,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="Informacion Viento"
+                android:textColor="@android:color/black"
+                android:text="@string/wind_information_title"
                 android:textSize="@dimen/app_subtitle"
                 />
 
@@ -141,6 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:textColor="@android:color/black"
                 android:text="N"
                 android:textSize="30dp"
                 android:textStyle="bold" />
@@ -150,6 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:textColor="@android:color/black"
                 android:text="2.56 m/sec"
                 android:textSize="@dimen/app_subtitle"
                 android:textStyle="bold" />

@@ -50,7 +50,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     protected String url_by_id = "http://api.openweathermap.org/data/2.5/weather?id=";
-    protected String url_by_gps = "http://api.openweathermap.org/data/2.5/weather?";
     protected String url_img = "http://openweathermap.org/img/w/";
     protected String IMG_EXTENSION = ".png";
     protected String API_KEY = "32c6d49435b4d444963dbe7aa2bfdf98";
@@ -69,60 +68,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         spinner = (ProgressBar) findViewById(R.id.loading);
         Button btnGPS = (Button) findViewById(R.id.findGPS);
-
 
         btnGPS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               /* if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-
-                mLocation.getLongitude();
-                mLocation.getLongitude();
-                new GetWeather("GPS").execute();*/
                 Intent startActivityIntent = new Intent(MainActivity.this, WeatherByGPS.class);
                 startActivity(startActivityIntent);
             }
         });
 
-
-        new GetWeather("").execute();
-
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-
-
-        });
-
+        new GetWeather().execute();
         myadapter = new SlideAdapter(getApplicationContext());
-        //viewPager.setAdapter(myadapter);
 
     }
 
@@ -170,13 +128,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private class GetWeather extends AsyncTask<Void, Void, Void> {
-        private boolean useGPS = false;
-
-        public GetWeather(String gps) {
-            if (gps.equalsIgnoreCase("GPS")) {
-                useGPS = true;
-            }
-        }
 
         @Override
         protected void onPreExecute() {
@@ -193,10 +144,14 @@ public class MainActivity extends AppCompatActivity {
             // Realizar llamada a url y obtener respuesta
             String[] mIdsArray;
             weatherArray = new ArrayList<WeatherData>();
-            if (useGPS) {
-                Log.i("URL", url_by_gps + "lat=" + mLocation.getLatitude() + "&lon=" + mLocation.getLongitude() + "&units=" + mode + "&appid=" + API_KEY);
-                String jsonStr = handler.makeServiceCall(url_by_gps + "lat=" + mLocation.getLatitude() + "&lon=" + mLocation.getLongitude() + "&units=" + mode + "&appid=" + API_KEY + "&lang=es");
-                Log.e("AG", "Respuesta de api: " + jsonStr);
+            mIdsArray = getResources().getStringArray(R.array.lst_locations);
+            for (String id : mIdsArray) {
+
+                Log.i("URL", url_by_id + id + "&units=" + mode + "&appid=" + API_KEY);
+                String jsonStr = handler.makeServiceCall(url_by_id + id + "&units=" + mode + "&appid=" + API_KEY + "&lang=es");
+
+
+                Log.i(TAG, "Respuesta de api: " + jsonStr);
                 if (jsonStr != null) {
                     try {
 
@@ -210,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
                         weatherArray.add(weatherData);
                         Log.i("AG", "Finaliza seteo");
-
+                        url.openConnection().getInputStream().close();
                     } catch (final JSONException e) {
                         Log.e(TAG, "Json parsing error: " + e.getMessage());
                         runOnUiThread(new Runnable() {
@@ -241,64 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-            } else {
-
-
-                mIdsArray = getResources().getStringArray(R.array.lst_locations);
-                for (String id : mIdsArray) {
-
-                    Log.i("URL", url_by_id + id + "&units=" + mode + "&appid=" + API_KEY);
-                    String jsonStr = handler.makeServiceCall(url_by_id + id + "&units=" + mode + "&appid=" + API_KEY + "&lang=es");
-
-
-                    Log.e("AG", "Respuesta de api: " + jsonStr);
-                    if (jsonStr != null) {
-                        try {
-
-                            //JSONArray jsonArray = new JSONArray(jsonStr);
-                            JSONObject jsonObj = new JSONObject(jsonStr);
-                            weatherData = new WeatherData(jsonObj);
-
-                            URL url = new URL(url_img + weatherData.getWeather().getIcon() + IMG_EXTENSION);
-                            Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                            weatherData.getWeather().setIconBitmap(image);
-
-                            weatherArray.add(weatherData);
-                            Log.i("AG", "Finaliza seteo");
-
-                        } catch (final JSONException e) {
-                            Log.e(TAG, "Json parsing error: " + e.getMessage());
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(),
-                                            "Json parsing error: " + e.getMessage(),
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    } else {
-                        Log.e(TAG, "No es posible obtener json del server.");
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(),
-                                        "No es posible obtener json del server. Revisar LogCat por posibles errores!",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-
-
-                }
             }
-
 
             return null;
         }
@@ -310,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
             viewPager.removeAllViews();
             viewPager.setAdapter(myadapter);
             viewPager.setCurrentItem(0);
-
 
             spinner.setVisibility(View.GONE);
 
